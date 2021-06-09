@@ -1,5 +1,8 @@
 <?php
     include "config/conexion.php";
+    session_start();
+    $usuario = $_SESSION['usuario'];
+    
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -30,6 +33,9 @@
                <li class="nav-item">
                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">PAGOS</a>
                </li>
+               <li class="nav-item">
+                   <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">CLIENTES</a>
+               </li>
                
            </ul>
        </div>
@@ -54,7 +60,7 @@
                     <h4 class="card-title"><strong>Raza: <?php echo $row["raza"]?></strong> </h4>
                     <p class="card-text"><strong>Detalle: <?php echo $row["descripcion"]?></strong> </p>
                     <div class="col-1">
-                        <a class="btn btn-success" href="php/solicitarpedido.php?action=addItem&id=<?php echo $row['id'] ?>">Agregar</a>
+                        <a class="btn btn-success" href="php/solicitarpedido.php?action=addItem&masid=<?php echo $row['masid'] ?>">Agregar</a>
                     </div>
                 </div>
             </div>

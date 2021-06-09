@@ -76,7 +76,7 @@ class Pedidos
         if(!is_array($item) or count($item) === 0){
             return false;
         }else{
-            if(!isset($item['id'],$item['especie'],$item['precio'],$item['cantidad'])){
+            if(!isset($item['masid'],$item['especie'],$item['precio'],$item['cantidad'])){
                 return false;
             }else{
                 //insertar elemento
@@ -86,7 +86,7 @@ class Pedidos
                 }
                 $item['precio'] = (float)$item['precio'];
                 //Genera un código unico para el identificador de fila.
-                $rowid = md5($item['id']);
+                $rowid = md5($item['masid']);
                 $_cantidad = isset($item['cantidad']) ? $item['cantidad'] : 0;
                 $item['rowid'] = $rowid;
                 $item['cantidad'] = $_cantidad;

@@ -25,7 +25,7 @@ $pedidos = new Pedidos;
                   document.getElementById('mensaje').innerHTML='Error al actualizar';
               }
           }
-          xhttp.open('GET','solicitarpedido.php?action=updateItem&id='+id+'&cantidad='+cantidad);
+          xhttp.open('GET','solicitarpedido.php?action=updateItem&masid='+id+'&cantidad='+cantidad);
           xhttp.send();
         }
     </script>
@@ -72,12 +72,12 @@ $pedidos = new Pedidos;
                 <?php                
                     if($_SESSION['cart_contents']>0){
                         foreach($_SESSION['cart_contents'] as $items){
-                            if(isset($items['id']) && !empty($items['id']) ){
+                            if(isset($items['masid']) && !empty($items['masid']) ){
                             
-                            echo "<tr><td>".$items['id']."</td><td>".$items['especie'].
-                            "</td><td>".$items['precio']."</td><td><input type='number' onchange='updateItem(this,".$items['id'].")' value='".$items['cantidad']."' > 
+                            echo "<tr><td>".$items['masid']."</td><td>".$items['especie'].
+                            "</td><td>".$items['precio']."</td><td><input type='number' onchange='updateItem(this,".$items['masid'].")' value='".$items['cantidad']."' > 
                             </td><td>$".$items['subtotal']."</td>
-                            <td> <a href='solicitarpedido.php?action=removeItem&id=".$items['id']."' class='btn btn-danger' onclick=''>Eliminar</a></td>
+                            <td> <a href='solicitarpedido.php?action=removeItem&masid=".$items['masid']."' class='btn btn-danger' onclick=''>Eliminar</a></td>
                             </tr>";
 
 
@@ -96,12 +96,16 @@ $pedidos = new Pedidos;
                     <th>Precio</th>
                     <th>Cantidad</th>
                     <th>Importe</th>
-                    <th>&nbsp;</th>
+                    <form method="POST"><th><button class="btn btn-primary" type="submit" name="agregar">Comprar</button></th></form>
                 </tr>
                 </tr>
             </tfoot>
         </table>
     </div>
 </body>
-
 </html>
+<?php
+    if(isset($_POST['agregar'])){
+        
+    }
+?>
