@@ -1,6 +1,11 @@
 <?php
 include 'Pedidos.php';
 $pedidos = new Pedidos;
+session_start();
+$nombre = $_SESSION['nombre'];
+$id = $_SESSION['id'];
+
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -10,43 +15,54 @@ $pedidos = new Pedidos;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>CARRITO</title>
 
+    <!--FUENTE LETRA:-->
+    <link rel="stylesheet" href="https://use.typekit.net/mdi6pgl.css">
+    <!--BOOTSTRAP/CSS:-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!--BOOTSTRAP:-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
     <script>
-        function updateItem(e, id){            
-          let cantidad = e.value;
-          let xhttp = new XMLHttpRequest();
-          xhttp.onload = function(){              
-              if(this.response == 'ok'){
-                  window.location="carrito.php";
-              }else{
-                  document.getElementById('mensaje').innerHTML='Error al actualizar';
-              }
-          }
-          xhttp.open('GET','solicitarpedido.php?action=updateItem&masid='+id+'&cantidad='+cantidad);
-          xhttp.send();
+        function updateItem(e, id){
+            let cantidad = e.value;
+            let xhttp = new XMLHttpRequest();
+            xhttp.onload = function(){
+                //Actualizar pagina
+                if(this.response == 'ok'){
+                    window.location= "Carrito.php";
+                }else{
+                    document.getElementById("mensaje").innerHTML = "Error en actualizar !!!"
+                }
+            }
+            xhttp.open("GET","SolicitarPedido.php?action=updateItem&id=" + id + "&cantidad=" + cantidad );
+            xhttp.send();
         }
     </script>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <a href="index.php" class="navbar-brand"><img src="../img/logo.jpg" alt="logo" whith="60" height="60" /></a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand"><img src="../img/logo.png" style="height: 60px ; width: 80px;"></a>
         <button class="navbar-toggler" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div id="my-nav" class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="../index.php">Inicio <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link disabled" href="Carrito.php" tabindex="-1" aria-disabled="true">Carrito</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Pagos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Contactanos</a>
                 </li>
             </ul>
         </div>
@@ -55,11 +71,14 @@ $pedidos = new Pedidos;
     <br>
     <br>
     <br>
+    <!--CONTENEDOR MENSAJE-->
     <div class="container">
-        <h1 class="alert alert-success" id="mensajes">Carrito de compras</h1>
+    <div class="alert alert-dark" id="mesnaje">
+                    <center><h2> <----------------- Detalle De Pedido de <?php echo $nombre ?> -----------------></h2></center>
+            </div>
         <table class="table">
             <thead>
-                <tr >
+                <tr>
                     <th>Id</th>
                     <th>Especie</th>
                     <th>Precio</th>
@@ -68,24 +87,24 @@ $pedidos = new Pedidos;
                     <th>&nbsp;</th>
                 </tr>
             </thead>
-            <tbody>            
-                <?php                
-                    if($_SESSION['cart_contents']>0){
-                        foreach($_SESSION['cart_contents'] as $items){
-                            if(isset($items['masid']) && !empty($items['masid']) ){
-                            
-                            echo "<tr><td>".$items['masid']."</td><td>".$items['especie'].
-                            "</td><td>".$items['precio']."</td><td><input type='number' onchange='updateItem(this,".$items['masid'].")' value='".$items['cantidad']."' > 
-                            </td><td>$".$items['subtotal']."</td>
-                            <td> <a href='solicitarpedido.php?action=removeItem&masid=".$items['masid']."' class='btn btn-danger' onclick=''>Eliminar</a></td>
-                            </tr>";
+            <tbody>
+                <?php
+                $sumador_de_cantidades = 0;
+                if (isset($_SESSION['cart_contents']) && $_SESSION['cart_contents']> 0 && $_SESSION['cart_contents']['total_items'] !=0) {
+                    foreach ($_SESSION['cart_contents'] as $items) {
+                        if (isset($items['id']) && !empty($items['id'])) {
+                            echo "<tr><td>" . $items['id'] . "</td><td>" . $items['especie'] .
+                                "</td><td>" . $items['price'] . "</td><td><input type='number' onchange='updateItem(this,".$items['id'].")' value='" . $items['cantidad'] .
+                                "'</td><td>$" . $items['subtotal'] . "</td>
+                                <td><a href='SolicitarPedido.php?action=removeItem&id=" . $items['id'] . "' class='btn btn-danger'" . "onclick=''>ELIMINAR</a></td></tr>";
+                                $sumador_de_cantidades = $sumador_de_cantidades +$items['subtotal'];
 
-
-                            }
                         }
-                    }else{
-                       echo "<tr><td colspan='6'><h1>No hay datos</h1></td></tr>"; 
                     }
+                 echo " <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td><h2><b>Subtotal:</b><h2></td><td>$ ".$sumador_de_cantidades." </td><td><a href='' class='btn btn-success'>COMPAR</a></td></tr>" ;   
+                } else {
+                    echo "<tr><td colspan='6'><center><h1>No hay datos</h1></center></td></tr>";
+                }
                 ?>
             </tbody>
             <tfoot>
@@ -96,16 +115,12 @@ $pedidos = new Pedidos;
                     <th>Precio</th>
                     <th>Cantidad</th>
                     <th>Importe</th>
-                    <form method="POST"><th><button class="btn btn-primary" type="submit" name="agregar">Comprar</button></th></form>
+                    <th>&nbsp;</th>
                 </tr>
                 </tr>
             </tfoot>
         </table>
     </div>
 </body>
+
 </html>
-<?php
-    if(isset($_POST['agregar'])){
-        
-    }
-?>

@@ -51,13 +51,13 @@ class Pedidos
         $this->cart_contents['total_items'] = $this->cart_contents['cart_total'] = 0;
 
         foreach ($this->cart_contents as $key => $val) {
-            if (!is_array($val) or !isset($val['precio'], $val['cantidad'])) {
+            if (!is_array($val) or !isset($val['price'], $val['cantidad'])) {
                 continue;
             }
-            $this->cart_contents['cart_total'] += ($val['precio'] * $val['cantidad']);
+            $this->cart_contents['cart_total'] += ($val['price'] * $val['cantidad']);
             $this->cart_contents['total_items'] += $val['cantidad'];
             $this->cart_contents[$key]['subtotal'] =
-                ($this->cart_contents[$key]['precio'] * $this->cart_contents[$key]['cantidad']);
+                ($this->cart_contents[$key]['price'] * $this->cart_contents[$key]['cantidad']);
         }
 
         if (count($this->cart_contents) <= 2) {
@@ -73,54 +73,54 @@ class Pedidos
     //Insertar un elemento en el carro.
     public function insert($item = array())
     {
-        if(!is_array($item) or count($item) === 0){
+        if (!is_array($item) or count($item) === 0) {
             return false;
-        }else{
-            if(!isset($item['masid'],$item['especie'],$item['precio'],$item['cantidad'])){
+        } else {
+            if (!isset($item['id'], $item['especie'], $item['price'], $item['cantidad'])) {
                 return false;
-            }else{
+            } else {
                 //insertar elemento
                 $item['cantidad'] = (float) $item['cantidad'];
-                if($item['cantidad']==0){
+                if ($item['cantidad'] == 0) {
                     return false;
                 }
-                $item['precio'] = (float)$item['precio'];
+                $item['price'] = (float)$item['price'];
                 //Genera un código unico para el identificador de fila.
-                $rowid = md5($item['masid']);
+                $rowid = md5($item['id']);
                 $_cantidad = isset($item['cantidad']) ? $item['cantidad'] : 0;
                 $item['rowid'] = $rowid;
                 $item['cantidad'] = $_cantidad;
                 $this->cart_contents[$rowid] = $item;
-                if($this->save_cart()){
+                if ($this->save_cart()) {
                     return isset($rowid) ? $rowid : true;
-                }else{
+                } else {
                     false;
                 }
             }
         }
     }
 
-    //Actualizar carrito
-    public function updateitem($item = array()){
+    //ACTUALIZAR CARRTIO
+    public function updateItem($item = array())
+    {
         if (!is_array($item) or count($item) === 0) {
             return false;
-        }else{
-            if (!isset($item['rowid'],$this->cart_contents[md5($item['rowid'])])) {
+        } else {
+            if (!isset($item['rowid'], $this->cart_contents[md5($item['rowid'])])) {
                 return false;
-            }else{
+            } else {
                 if (isset($item['cantidad'])) {
-                    $item['cantidad'] = (Float)$item['cantidad'];
-                    if($item['cantidad'] == 0){
+                    $item['cantidad'] = (float)$item['cantidad'];
+                    if ($item['cantidad'] == 0) {
                         $this->remove($item['rowid']);
-                    }                
-                }             
-                $this->cart_contents[md5($item['rowid'])]['cantidad']=$item['cantidad'];
+                    }
+                }
+                $this->cart_contents[md5($item['rowid'])]['cantidad'] = $item['cantidad'];
                 $this->save_cart();
                 return true;
             }
         }
     }
-
 
     //Remover un item del el carro.
     public function remove($row_id)

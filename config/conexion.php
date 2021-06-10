@@ -1,23 +1,13 @@
-<?php 
-$servidor="localhost";
-$usuario="root";
-$clave="";
-$baseD="tiendamascotas";
-$conectar = mysqli_connect($servidor,$usuario,$clave,$baseD) or die("Error en la conexion");
+<?php
+//DB details
+$dbHost = 'localhost';
+$dbUsername = 'root';
+$dbPassword = '';
+$dbName = 'TiendaMascotas';
 
-function conectar(){
-$servidor="localhost";
-$usuario="root";
-$clave="";
-$baseD="tiendamascotas";
-$conectar = mysqli_connect($servidor,$usuario,$clave,$baseD) or die("Error en la conexion");
-return $conectar;
+//Create connection and select DB
+$db = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+
+if ($db->connect_error) {
+    die("No hay Conexion con la base de datos: " . $db->connect_error);
 }
-function buscar($a,$b){
-	$conect = conectar();
-	$buscarUsuario = "SELECT USUARIO,CONTRASEÑA FROM clientes WHERE USUARIO='$a' && CONTRASEÑA='$b'";
-	$unir = mysqli_query($conect,$buscarUsuario);
-	$unirA = mysqli_num_rows($unir);
-	return $unirA;
-}
-?>
