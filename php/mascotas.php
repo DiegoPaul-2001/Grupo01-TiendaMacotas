@@ -42,7 +42,7 @@
     <div class="container">
         <center><h2>Agregar mascotas</h2></center>
         <br><br>
-        <form method="Post" action="">
+        <form method="POST" action="">
             <center><div class="form-group col-5">
                 <label for="">Especie</label><br><input type="text" name="especie" class="form-control"><br>
                 <label for="">Raza</label><br><input type="text" name="raza" class="form-control"><br>
@@ -53,14 +53,15 @@
                 <label for="">Precio</label><br><input type="text" name="precio" class="form-control"><br>
             </div>
             <div>
-                <button class="btn btn-primary" type="button" name="agregar">Agregar</button>
+                <button class="btn btn-primary" type="submit" name="agregar">Agregar</button>
             </div></center>
         </form>
     </div>
 </body>
 </html>
 <?php
-    if(isset($_POST['agregar'])){
+    include ("../config/conexion.php");
+    if(isset($_POST['agregar'])){        
         $especie = $_POST['especie'];
         $raza = $_POST['raza'];
         $detalle = $_POST['detalle'];
@@ -70,6 +71,10 @@
         $precio = $_POST['precio'];
         $insertar = "INSERT INTO mascota VALUES ('','$especie','$raza','$detalle','$fecha','$estado','$ruta','$precio')";
         $query = mysqli_query($db, $insertar);
-        
+        if($query){
+            echo "Insertado correctamente";
+        }else{
+            echo "no ingreso";
+        }
     }
 ?>
