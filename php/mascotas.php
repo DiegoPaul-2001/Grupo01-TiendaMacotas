@@ -39,11 +39,11 @@
     </nav>
     <br><br><br><br><br><br>
 
-    <div class="container">
+    <div class="container col-5" style="border:1px solid green;">
         <center><h2>Agregar mascotas</h2></center>
         <br><br>
         <form method="POST" action="">
-            <center><div class="form-group col-5">
+            <center><div class="form-group ">
                 <label for="">Especie</label><br><input type="text" name="especie" class="form-control" required><br>
                 <label for="">Raza</label><br><input type="text" name="raza" class="form-control" required><br>
                 <label for="">Detalle</label><br><input type="text" name="detalle" class="form-control" required><br>

@@ -122,5 +122,7 @@ $id = $_SESSION['id'];
         </table>
     </div>
 </body>
-
 </html>
+<?php
+    
+?>
