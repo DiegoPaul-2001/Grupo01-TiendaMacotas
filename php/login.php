@@ -20,7 +20,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <!--Custom styles-->
-    <link rel="stylesheet" type="text/css" href="../css/estilo.css"></head>
+    <link rel="stylesheet" type="text/css" href="../css/estilo.css">
+</head>
 
 <body>
     <div class="container">
@@ -43,6 +44,7 @@
                             <input type="text" class="form-control" placeholder="username" name="usuario">
 
                         </div>
+                        <br>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
@@ -52,14 +54,16 @@
                         <div class="row align-items-center remember">
                             <input type="checkbox">Remember Me
                         </div>
+                        <br>
                         <div class="form-group">
-                            <input type="submit" value="Login" class="btn float-right login_btn" name="entrar">
+                            <input type="submit" value="Login" class="btn float-left login_btn" name="entrar">
+                            <a href="registro.php" class="btn float-right login_btn">Registrar</a>
                         </div>
                     </form>
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-center links">
-                    ¿No tienes una cuenta?<a href="#">Registrarse</a>
+                        ¿No tienes una cuenta?<a href="#">Registrarse</a>
                     </div>
                     <div class="d-flex justify-content-center">
                         <a href="#">¿Olvidaste tu contraseña?</a>
@@ -74,27 +78,23 @@
 <?php
 
 include("../php/funciones.php");
-	$conexion = conexion();
-	echo "CONEXION SATISFACTORIA";
+$conexion = conexion();
+if (isset($_POST['entrar'])) {
+    $usuario = $_POST['usuario'];
+    $contraseña = $_POST['contraseña'];
 
-	if (isset($_POST['entrar'])) {
-	$usuario = $_POST['usuario'];
-	$contraseña = $_POST['contraseña'];
+    $ver = buscar($usuario, $contraseña);
+    session_start();
+    $_SESSION['usu'] = $usuario;
 
-	$ver = buscar($usuario,$contraseña);
-	session_start();
-	$_SESSION['usu'] = $usuario;
-
-	if ($ver>0) {
-        session_start ();
-		header('Location: ../index.php');
+    if ($ver > 0) {
+        session_start();
+        header('Location: ../index.php');
         $_SESSION['usuario'] = $usuario;
-
-	}else{
-		echo '<script>alert("USUARIO O CONTRASEÑA INCORRECTA VERIFIQUE...");</script>';
-		
-	}
-	}
+    } else {
+        echo '<script>alert("USUARIO O CONTRASEÑA INCORRECTA VERIFIQUE...");</script>';
+    }
+}
 
 
 
