@@ -44,13 +44,13 @@
         <br><br>
         <form method="POST" action="">
             <center><div class="form-group col-5">
-                <label for="">Especie</label><br><input type="text" name="especie" class="form-control"><br>
-                <label for="">Raza</label><br><input type="text" name="raza" class="form-control"><br>
-                <label for="">Detalle</label><br><input type="text" name="detalle" class="form-control"><br>
-                <label for="">Fecha de Nacimiento</label><br><input type="text" name="fechaNacimiento" class="form-control"><br>
-                <label for="">Estado</label><br><input type="text" name="estado" class="form-control"><br>
-                <label for="">Ruta de foto</label><br><input type="text" name="ruta" class="form-control"><br>
-                <label for="">Precio</label><br><input type="text" name="precio" class="form-control"><br>
+                <label for="">Especie</label><br><input type="text" name="especie" class="form-control" required><br>
+                <label for="">Raza</label><br><input type="text" name="raza" class="form-control" required><br>
+                <label for="">Detalle</label><br><input type="text" name="detalle" class="form-control" required><br>
+                <label for="">Fecha de Nacimiento</label><br><input type="text" name="fechaNacimiento" class="form-control" required><br>
+                <label for="">Estado</label><br><input type="text" name="estado" class="form-control" required><br>
+                <label for="">Ruta de foto</label><br><input type="text" name="ruta" class="form-control" required><br>
+                <label for="">Precio</label><br><input type="text" name="precio" class="form-control" required><br>
             </div>
             <div>
                 <button class="btn btn-primary" type="submit" name="agregar">Agregar</button>
