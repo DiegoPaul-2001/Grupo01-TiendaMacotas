@@ -42,7 +42,6 @@
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
                             <input type="text" class="form-control" placeholder="username" name="usuario">
-
                         </div>
                         <br>
                         <div class="input-group form-group">
@@ -56,18 +55,13 @@
                         </div>
                         <br>
                         <div class="form-group">
-                            <input type="submit" value="Login" class="btn float-left login_btn" name="entrar">
-                            <a href="registro.php" class="btn float-right login_btn">Registrar</a>
+                            <center><input type="submit" value="Login" class="btn  login_btn" name="entrar"></center>
+                            <br>
+                            <div class="d-flex justify-content-center links">
+                                ¿No tienes una cuenta?<a href="registro.php">Registrarse</a>
+                            </div>
                         </div>
                     </form>
-                </div>
-                <div class="card-footer">
-                    <div class="d-flex justify-content-center links">
-                        ¿No tienes una cuenta?<a href="#">Registrarse</a>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <a href="#">¿Olvidaste tu contraseña?</a>
-                    </div>
                 </div>
             </div>
         </div>

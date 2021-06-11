@@ -84,7 +84,8 @@
                         </div>
                         <div class="form-group">
                             <center><input type="submit" value="Enviar " class="btn login_btn" name="entrar"></center>
-                            </a>
+                            <br>
+                            <a href="login.php" class="btn btn-danger" style="float: right;">Regresar</a>
                         </div>
                     </form>
                 </div>
@@ -96,10 +97,10 @@
 </html>
 <?php
 include("../config/conexion.php");
+
 if (isset($_POST['entrar'])) {
 
     if ($_POST["nombre"] == '' && $_POST["cedula"] == '' && $_POST["usuario"] == '' && $_POST["contra"] == '' && $_POST["email"] == '' && $_POST["telefono"] == '' && $_POST["direccion"] == '') {
-
         echo "<script>
                 alert('Por favor Ingrese los Datos !!');
     </script>";
