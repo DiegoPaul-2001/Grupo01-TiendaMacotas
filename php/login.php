@@ -51,14 +51,14 @@
                             <input type="password" class="form-control" placeholder="password" name="contraseña">
                         </div>
                         <div class="row align-items-center remember">
-                            <input type="checkbox">Remember Me
+                            <input type="checkbox">Recordarme
                         </div>
                         <br>
                         <div class="form-group">
                             <center><input type="submit" value="Login" class="btn  login_btn" name="entrar"></center>
                             <br>
                             <div class="d-flex justify-content-center links">
-                                ¿No tienes una cuenta?<a href="registro.php">Registrarse</a>
+                                ¿No tienes una cuenta?<a href="registro.php">Registrese</a>
                             </div>
                         </div>
                     </form>
