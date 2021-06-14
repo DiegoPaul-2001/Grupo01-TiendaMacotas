@@ -76,6 +76,7 @@ $id = $_SESSION['id'];
     <div class="alert alert-dark" id="mesnaje">
                     <center><h2> <----------------- Detalle De Pedido de <?php echo $nombre ?> -----------------></h2></center>
             </div>
+        <form method="POST">
         <table class="table">
             <thead>
                 <tr>
@@ -94,19 +95,19 @@ $id = $_SESSION['id'];
                     foreach ($_SESSION['cart_contents'] as $items) {
                         if (isset($items['id']) && !empty($items['id'])) {
                             echo "<tr><td>" . $items['id'] . "</td><td>" . $items['especie'] .
-                                "</td><td>" . $items['price'] . "</td><td><input type='number' onchange='updateItem(this,".$items['id'].")' value='" . $items['cantidad'] .
+                                "</td><td name='precio' >" . $items['price'] . "</td><td><input type='number' name='cantidad' onchange='updateItem(this,".$items['id'].")' value='" . $items['cantidad'] .
                                 "'</td><td>$" . $items['subtotal'] . "</td>
                                 <td><a href='SolicitarPedido.php?action=removeItem&id=" . $items['id'] . "' class='btn btn-danger'" . "onclick=''>ELIMINAR</a></td></tr>";
                                 $sumador_de_cantidades = $sumador_de_cantidades +$items['subtotal'];
 
                         }
                     }
-                 echo " <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td><h2><b>Subtotal:</b><h2></td><td>$ ".$sumador_de_cantidades." </td><td><a href='' class='btn btn-success'>COMPAR</a></td></tr>" ;   
+                 echo " <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td><h2><b>Subtotal:</b><h2></td><td><input type='text' name='totalpagar' value='".$sumador_de_cantidades." '>$</td><td><button class='btn btn-primary' name='comprar' type='submit'>COMPRAR</button></td></tr>" ;   
                 } else {
                     echo "<tr><td colspan='6'><center><h1>No hay datos</h1></center></td></tr>";
-                }
+                }                
                 ?>
-            </tbody>
+            </tbody>            
             <tfoot>
                 <tr>
                 <tr>
@@ -119,10 +120,25 @@ $id = $_SESSION['id'];
                 </tr>
                 </tr>
             </tfoot>
-        </table>
+        </table></form>
     </div>
 </body>
 </html>
-<?php
-    
+<?php    
+    include ("../config/conexion.php");
+    if(isset($_POST['comprar'])){   
+        $total =$_POST['totalpagar'];
+        $insertar = "Insert into orden values('','$id','$total','2021/05/11','2021/05/11','1')";        
+        $query= mysqli_query($db,$insertar);
+        foreach ($_SESSION['cart_contents'] as $items) {            
+            if (isset($items['id']) && !empty($items['id'])) { 
+                
+            }
+        }
+        if($query){
+            echo "Ingreso correctamente";
+        }else{
+            echo "no ingresa";
+        }
+    }
 ?>
