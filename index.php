@@ -59,6 +59,7 @@
                     <a class="nav-link disabled" href="php/mascotas.php" tabindex="-1" aria-disabled="true">Agregar Macotas</a>
                 </li>
             </ul>
+            <a href="php/login.php"><button class="btn btn-danger" type="submit" name="destruir">Cerrar Sesion</button></a>
         </div>
     </nav>
 
@@ -100,9 +101,13 @@
             }else{
                 echo"<h1><center><b>No existen resultados</b></center></h1>";
             }
+            if(isset($_POST['destruir'])){
+                session_destroy();
+            }
         ?>
     </div>
 
  
 </body>
 </html>
+

@@ -126,18 +126,16 @@ $id = $_SESSION['id'];
 </html>
 <?php    
     include ("../config/conexion.php");
-                $buscar = "SELECT (MAX(ordId)+1) as idorden FROM orden";            
-                $querybus= mysqli_query($db,$buscar); 
-                $busid= mysqli_fetch_array($querybus);
-                $id = $busid['idorden'];
+        $idbuscar=0;        
     if(isset($_POST['comprar'])){           
         $total =$_POST['totalpagar'];
-        $insertar = "Insert into orden values('','$id','$total','NOw()','NOW()','1')";        
+        $insertar = "Insert into orden values('','$id','$total',NOW(),NOW(),'1')";        
         $query= mysqli_query($db,$insertar);
-        
-        foreach ($_SESSION['cart_contents'] as $items) {                   
-            if (isset($items['id']) && !empty($items['id'])) { 
-                $insertarD="Insert into detalleorden values('','$id','".$items['id']."','". $items['cantidad'] ."')";
+        if($insertar){
+        $orderID=$db->insert_id;
+        foreach ($_SESSION['cart_contents'] as $items) {                               
+            if (isset($items['id']) && !empty($items['id'])) {                
+                $insertarD="Insert into detalleorden values('','$orderID','".$items['id']."','". $items['cantidad'] ."')";
                 $query= mysqli_query($db,$insertarD);
             }
         }
@@ -146,5 +144,6 @@ $id = $_SESSION['id'];
         }else{
             echo "no ingresa";
         }
+      }
     }
 ?>
