@@ -126,16 +126,18 @@ $id = $_SESSION['id'];
 </html>
 <?php    
     include ("../config/conexion.php");
-    if(isset($_POST['comprar'])){   
-        $idorden=0;
+                $buscar = "SELECT (MAX(ordId)+1) as idorden FROM orden";            
+                $querybus= mysqli_query($db,$buscar); 
+                $busid= mysqli_fetch_array($querybus);
+                $id = $busid['idorden'];
+    if(isset($_POST['comprar'])){           
         $total =$_POST['totalpagar'];
-        $insertar = "Insert into orden values('','$id','$total','2021/05/11','2021/05/11','1')";        
+        $insertar = "Insert into orden values('','$id','$total','NOw()','NOW()','1')";        
         $query= mysqli_query($db,$insertar);
-        foreach ($_SESSION['cart_contents'] as $items) {   
-                $buscar = "SELECT MAX(ordId) into idorden FROM `orden`";
-                $querybus= mysqli_query($db,$buscar);
+        
+        foreach ($_SESSION['cart_contents'] as $items) {                   
             if (isset($items['id']) && !empty($items['id'])) { 
-                $insertarD="Insert into detalleorden values('','$idorden','".$items['id']."','". $items['cantidad'] ."')";
+                $insertarD="Insert into detalleorden values('','$id','".$items['id']."','". $items['cantidad'] ."')";
                 $query= mysqli_query($db,$insertarD);
             }
         }
