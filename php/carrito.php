@@ -127,12 +127,16 @@ $id = $_SESSION['id'];
 <?php    
     include ("../config/conexion.php");
     if(isset($_POST['comprar'])){   
+        $idorden=0;
         $total =$_POST['totalpagar'];
         $insertar = "Insert into orden values('','$id','$total','2021/05/11','2021/05/11','1')";        
         $query= mysqli_query($db,$insertar);
-        foreach ($_SESSION['cart_contents'] as $items) {            
+        foreach ($_SESSION['cart_contents'] as $items) {   
+                $buscar = "SELECT MAX(ordId) into idorden FROM `orden`";
+                $querybus= mysqli_query($db,$buscar);
             if (isset($items['id']) && !empty($items['id'])) { 
-                
+                $insertarD="Insert into detalleorden values('','$idorden','".$items['id']."','". $items['cantidad'] ."')";
+                $query= mysqli_query($db,$insertarD);
             }
         }
         if($query){
