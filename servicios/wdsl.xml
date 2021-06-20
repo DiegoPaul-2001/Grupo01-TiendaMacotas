@@ -1,0 +1,111 @@
+<!--  
+(c) ISTVN
+2021-06-18
+CRUD
+
+Online WSDL 1.1 SOAP generator 0.2
+Julien Blitte
+  -->
+<definitions xmlns:tns="http://localhost.wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://localhost.xsd" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" name="CRUD" targetNamespace="http://localhost.wsdl">
+<!--  definition of datatypes  -->
+<types>
+<schema xmlns="http://www.w3.org/2000/10/XMLSchema" targetNamespace="http://localhost.xsd">
+<element name="nombre">
+<complexType>
+<all>
+<element name="value" type="string"/>
+</all>
+</complexType>
+</element>
+<element name="cedula">
+<complexType>
+<all>
+<element name="value" type="string"/>
+</all>
+</complexType>
+</element>
+<element name="usuario">
+<complexType>
+<all>
+<element name="value" type="string"/>
+</all>
+</complexType>
+</element>
+<element name="contrasenia">
+<complexType>
+<all>
+<element name="value" type="string"/>
+</all>
+</complexType>
+</element>
+<element name="email">
+<complexType>
+<all>
+<element name="value" type="string"/>
+</all>
+</complexType>
+</element>
+<element name="telefono">
+<complexType>
+<all>
+<element name="value" type="string"/>
+</all>
+</complexType>
+</element>
+<element name="direccion">
+<complexType>
+<all>
+<element name="value" type="string"/>
+</all>
+</complexType>
+</element>
+<element name="mensaje">
+<complexType>
+<all>
+<element name="value" type="string"/>
+</all>
+</complexType>
+</element>
+</schema>
+</types>
+<!--  response messages  -->
+<message name="returns_mensaje">
+<part name="mensaje" type="xsd:mensaje"/>
+</message>
+<!--  request messages  -->
+<message name="insertar">
+<part name="nombre" type="xsd:nombre"/>
+<part name="cedula" type="xsd:cedula"/>
+<part name="usuario" type="xsd:usuario"/>
+<part name="contrasenia" type="xsd:contrasenia"/>
+<part name="email" type="xsd:email"/>
+<part name="telefono" type="xsd:telefono"/>
+<part name="direccion" type="xsd:direccion"/>
+</message>
+<!--  server's services  -->
+<portType name="CRUD">
+<operation name="insertar">
+<input message="tns:insertar"/>
+<output message="tns:returns_mensaje"/>
+</operation>
+</portType>
+<!--  server encoding  -->
+<binding name="CRUD_webservices" type="tns:CRUD">
+<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+<operation name="insertar">
+<soap:operation soapAction="urn:xmethods-delayed-quotes#insertar"/>
+<input>
+<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</input>
+<output>
+<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</output>
+</operation>
+</binding>
+<!--  access to service provider  -->
+<service name="ISTVN">
+<port name="ISTVN_0" binding="CRUD_webservices">
+<soap:address location="http://localhost/TiendaMascotasGit/Grupo01-TiendaMacotas-1/servcios/server.php"/>
+</port>
+</service>
+</definitions>

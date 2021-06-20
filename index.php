@@ -56,6 +56,9 @@
                     <a class="nav-link disabled" href="php/login.php" tabindex="-1" aria-disabled="true">Iniciar Sesion</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link disabled" href="php/registro.php" tabindex="-1" aria-disabled="true">Agregar Clientes</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link disabled" href="php/mascotas.php" tabindex="-1" aria-disabled="true">Agregar Macotas</a>
                 </li>
             </ul>

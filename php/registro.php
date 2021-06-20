@@ -96,9 +96,24 @@
 
 </html>
 <?php
-include("../config/conexion.php");
-
 if (isset($_POST['entrar'])) {
+    
+$cliente = new SoapClient("http://localhost/TiendaMascotasGit/Grupo01-TiendaMacotas-1/servicios/wdsl.xml");
+    $nombre = $_POST["nombre"];
+    $cedula = $_POST["cedula"];
+    $usuario = $_POST["usuario"];
+    $contra = $_POST["contra"];
+    $email = $_POST["email"];
+    $telefono = $_POST["telefono"];
+    $direccion = $_POST["direccion"];
+    $return =$cliente->__insertar([$nombre,$cedula,$usuario,$contra,$email,$telefono,$direccion]);
+
+}
+
+
+
+
+/*if (isset($_POST['entrar'])) {
 
     if ($_POST["nombre"] == '' && $_POST["cedula"] == '' && $_POST["usuario"] == '' && $_POST["contra"] == '' && $_POST["email"] == '' && $_POST["telefono"] == '' && $_POST["direccion"] == '') {
         echo "<script>
@@ -126,5 +141,5 @@ if (isset($_POST['entrar'])) {
     </script>";
         }
     }
-}
+}*/
 ?>
